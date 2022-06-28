@@ -35,8 +35,10 @@ void	read_map(char *file_name)
 {
 	int		i;
 
-	if (!check_widths(file_name) || !check_filename(file_name))
-		ft_error("File name is wrong or the map is not rectangle");
+	if (!check_filename(file_name))
+		ft_error("File name is wrong");
+	if (!check_widths(file_name))
+		ft_error("The map is not rectangle");
 	g_data.map->height = get_height(file_name);
 	g_data.map->width = get_width(file_name);
 	g_data.map->matrix = (char **)malloc(sizeof(char *)

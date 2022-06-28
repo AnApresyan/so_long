@@ -26,5 +26,21 @@ int	check_components(t_map *map)
 
 int	check_filename(char *file_name)
 {
+	int		len;
+	int		i;
+	int		j;
+	char	*word;
+
+	word = ".ber";
+	len = ft_strlen(file_name);
+	i = len - 1;
+	while (i >= 0 && file_name[i] != '.')
+		i--;
+	j = 0;
+	while (j <= 3 && i < len)
+	{
+		if (word[j++] != file_name[i++])
+			return (0);
+	}
 	return (1);
 }
