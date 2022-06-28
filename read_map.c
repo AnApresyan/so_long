@@ -6,7 +6,7 @@
 /*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:29:59 by aapresya          #+#    #+#             */
-/*   Updated: 2022/06/28 21:31:47 by aapresya         ###   ########.fr       */
+/*   Updated: 2022/06/28 21:38:39 by aapresya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	check(void)
 {
 	if (!check_walls(g_data.map))
 		ft_error("The map is not surrounded by walls");
-	if (!check_starting_position(g_data))
+	if (!check_starting_position())
 		ft_error("There is no or multiple starting positions in the map");
 	if (!check_exit(g_data.map))
 		ft_error("There is no exit in the map");
