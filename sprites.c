@@ -6,7 +6,7 @@
 /*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:29:54 by aapresya          #+#    #+#             */
-/*   Updated: 2022/06/28 21:29:55 by aapresya         ###   ########.fr       */
+/*   Updated: 2022/06/28 21:45:26 by aapresya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_calculate_resolution(void)
 
 	mlx_get_screen_size(g_data.scr.mlx, &screen_w, &screen_h);
 	if (g_data.map->height > g_data.map->width)
-		g_data.square_size = 0.7 * screen_h / g_data.map->height;
+		g_data.square_size = 0.6 * screen_h / g_data.map->height;
 	else
-		g_data.square_size = 0.7 * screen_w / g_data.map->width;
+		g_data.square_size = 0.6 * screen_w / g_data.map->width;
 	g_data.scr.image.width = g_data.square_size * g_data.map->width;
 	g_data.scr.image.height = g_data.square_size * g_data.map->height;
 }
