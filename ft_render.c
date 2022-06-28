@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_render.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 21:30:13 by aapresya          #+#    #+#             */
+/*   Updated: 2022/06/28 21:30:14 by aapresya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h" 
 
 void	ft_draw_frame(void)
@@ -41,6 +53,9 @@ void	move_util2(void)
 		g_data.score++;
 	if (g_data.map->matrix[g_data.x][g_data.y] == 'E'
 		&& g_data.score == g_data.collectibes)
-		ft_error("Won");
+	{
+		ft_putstr("Won");
+		exit(0);
+	}
 	g_data.map->matrix[g_data.x][g_data.y] = 'P';
 }

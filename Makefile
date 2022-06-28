@@ -1,43 +1,50 @@
-NAME		=	so_long
-CC			= gcc
-SRCS		=	$(wildcard *.c)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/28 21:36:19 by aapresya          #+#    #+#              #
+#    Updated: 2022/06/28 21:36:20 by aapresya         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-LIBFT		=	libft/libft.a
-CFLAGS		=	
-MLXFLAGS	=	-L ./mlx/ -lmlx -framework OpenGL -framework AppKit -lz
-RM			=	rm -f
-OBJS		=	$(SRCS:%.c=%.o)
+NAME	= so_long
 
-ifeq ($(shell uname), Linux)
-MLXFLAGS	=	-L ./mlx_linux/ -lmlx -Ilmlx -lXext -lX11
-endif
+MLX		= -Lmlx -lmlx -framework OpenGL -framework AppKit -lm
+SRCS	= $(wildcard *.c)
+OBJS	= ${SRCS:.c=.o}
+CC		= gcc
+CFLAGS	= -O3 -Wall -Wextra -Werror
+RM		= rm -rf
 
+all: $(NAME)
 
-all:		$(NAME)
-
-$(NAME):	$(OBJS)
-			make -C libft	
-			make clean -C libft
-			$(CC) $(SRCS) $(LIBFT) $(MLXFLAGS) $(CFLAGS) -o $(NAME)
-
-%o:			%.c
-			$(CC) $(CFLAGS) -Imlx -c $< -o $@
+${NAME}: ${OBJS}
+	@echo [so_long] Compiling mlx...
+	@$(MAKE) -C ./mlx
+	@echo [so_long] Compiling libft...
+	@$(MAKE) -C ./libft
+	@mv mlx/libmlx.dylib .
+	@echo [so_long] Compiling so_long...
+	@${CC} ${OBJS} ${CFLAGS} ${MLX} ./libft/libft.a libmlx.dylib -o ${NAME}
+	@echo [so_long] so_long successfully compiled. Run ./so_long \*.ber to read from a map. 
 
 clean:
-			$(RM) $(OBJS)
+	@$(MAKE) -C mlx clean
+	@$(MAKE) -C libft fclean
+	@${RM} ${OBJS}
 
-fclean:		clean
-			$(RM) $(NAME)
-			$(RM) *.out
-			make fclean -C libft/
+fclean: clean
+	@${RM} ${NAME}
+	@${RM} libmlx.dylib
 
-re:			fclean all
+norme:
+	@norminette -R CheckForbiddenSourceHeader *.c *.h libft/*.c libft/*.h
+	
+bonus: all
 
-git:
-	@git add .
-	@git commit -m "$m"
-	@git push
-	@echo "Commit sent to github"
-# To call: make git m="my commit"
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: clean fclean re all bonus

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 21:30:36 by aapresya          #+#    #+#             */
+/*   Updated: 2022/06/28 21:32:57 by aapresya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 int	check_walls(t_map *map)
@@ -31,17 +43,23 @@ int	check_widths(char *file_name)
 	int		width;
 	int		wd;
 	char	*line;
+	int		r;
 
 	fd = open(file_name, O_RDONLY, 0);
+	if (fd < 0)
+		ft_error("File doesn't exist");
 	get_next_line(fd, &line);
 	width = ft_strlen(line);
-	free (line);
-	while (get_next_line(fd, &line))
+	free(line);
+	while (1)
 	{
+		r = get_next_line(fd, &line);
 		wd = ft_strlen(line);
+		free(line);
+		if (!r)
+			break ;
 		if (wd != width)
 			return (0);
-		free(line);
 	}
 	close(fd);
 	return (1);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 21:29:59 by aapresya          #+#    #+#             */
+/*   Updated: 2022/06/28 21:31:47 by aapresya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 int	get_height(char *file_name)
@@ -5,13 +17,17 @@ int	get_height(char *file_name)
 	char	*line;
 	int		fd;
 	int		height;
+	int		r;
 
 	fd = open(file_name, O_RDONLY, 0);
 	height = 0;
-	while (get_next_line(fd, &line))
+	while (1)
 	{
-		height++;
+		r = get_next_line(fd, &line);
 		free(line);
+		if (!r)
+			break ;
+		height++;
 	}
 	close(fd);
 	return (height);
@@ -57,11 +73,13 @@ void	read_map_util(char *file_name)
 	int		i;
 	int		j;
 	char	*line;
+	int		r;
 
 	fd = open(file_name, O_RDONLY, 0);
 	i = 0;
-	while (get_next_line(fd, &line))
+	while (1)
 	{
+		r = get_next_line(fd, &line);
 		j = 0;
 		while (j < g_data.map->width)
 		{
@@ -70,6 +88,8 @@ void	read_map_util(char *file_name)
 		}
 		i++;
 		free(line);
+		if (!r)
+			break ;
 	}
 	close(fd);
 }

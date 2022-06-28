@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aapresya <aapresya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 21:30:05 by aapresya          #+#    #+#             */
+/*   Updated: 2022/06/28 21:32:03 by aapresya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 int	ft_mlx_terminate(int keycode, t_keys *keys)
@@ -11,19 +23,20 @@ int	ft_mlx_terminate(int keycode, t_keys *keys)
 
 int	ft_mlx_pressed(int keycode, t_keys *keys)
 {
-	if (keycode == 65307)
+	if (keycode == 53)
 		exit(0);
-	if ((keycode == 119 || keycode == 115 || keycode == 100 || keycode == 97)
+	if ((keycode == 13 || keycode == 1 || keycode == 0 || keycode == 2)
 		&& keys->check)
 	{
-		if (keycode == 119)
+		if (keycode == 13)
 			keys->up = 1;
-		if (keycode == 115)
+		if (keycode == 1)
 			keys->down = 1;
-		if (keycode == 100)
+		if (keycode == 2)
 			keys->right = 1;
-		if (keycode == 97)
+		if (keycode == 0)
 			keys->left = 1;
+		g_data.keycode = keycode;
 		keys->check = 0;
 	}
 	return (0);
@@ -31,20 +44,21 @@ int	ft_mlx_pressed(int keycode, t_keys *keys)
 
 int	ft_mlx_released(int keycode, t_keys *keys)
 {
-	if (keycode == 119 || keycode == 115 || keycode == 100 || keycode == 97)
+	if (g_data.keycode == keycode)
 	{
-		if (keycode == 119)
+		if (keycode == 13)
 			keys->up = 0;
-		if (keycode == 115)
+		if (keycode == 1)
 			keys->down = 0;
-		if (keycode == 100)
+		if (keycode == 2)
 			keys->right = 0;
-		if (keycode == 97)
-			keys->left = 97;
+		if (keycode == 0)
+			keys->left = 0;
 		keys->check = 1;
 	}
+	printf("Keycode: %d\n", keycode);
 	ft_putstr("Moves: ");
-	ft_putstr(ft_itoa(g_data.moves));
+	ft_putnbr_fd(g_data.moves, 1);
 	ft_putstr("\n");
 	return (0);
 }
@@ -53,7 +67,7 @@ t_parsed	g_data;
 
 int	main(int argc, char **argv)
 {
-	if (argc < 1)
+	if (argc != 2)
 		return (0);
 	g_data.map = (t_map *)malloc(sizeof(t_map));
 	read_map(argv[1]);
@@ -67,6 +81,7 @@ int	main(int argc, char **argv)
 	g_data.scr.image.addr = mlx_get_data_addr(g_data.scr.image.ptr,
 			&g_data.scr.image.bpp, &g_data.scr.image.line_len,
 			&g_data.scr.image.endian);
+	g_data.keys.check = 1;
 	g_data.score = 0;
 	g_data.moves = 0;
 	mlx_hook(g_data.scr.window, 2, 1L << 0, ft_mlx_pressed, &g_data.keys);
@@ -76,20 +91,3 @@ int	main(int argc, char **argv)
 	mlx_loop(g_data.scr.mlx);
 	return (0);
 }
-
-	// int	i;
-	// int	j;
-	// i = 0;
-	// while (i < g_data.map->height)
-	// {
-	// 	j = 0;
-	// 	while (j < g_data.map->width)
-	// 	{
-	// 		printf("%c", g_data.map->matrix[i][j]);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// 	printf("\n");
-	// }
-	// printf("height: %d\n",g_data.map->height);
-	// printf("width: %d", g_data.map->width);

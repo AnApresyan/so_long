@@ -104,4 +104,5 @@ int				ft_tolower(int c);
 
 int				ft_toupper(int c);
 void			ft_putstr(char *s);
+void			ft_putnbr_fd(int n, int fd);
 #endif
